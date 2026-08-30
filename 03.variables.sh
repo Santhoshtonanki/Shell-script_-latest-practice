@@ -1,3 +1,7 @@
+Person1: "$person1"
+Person2: "$person2"
+
+
 echo "$person1" :: Hi ra $person2, how are you doing?
 echo "$person2" :: I'm doing great, thanks for asking! How about you?
 echo "$person1" :: I'm good too. Have you been working on any interesting projects lately?
