@@ -16,3 +16,5 @@ echo "current shell: $SHELL"
 echo "current process id: $$"
 echo "current script name: $0"
 echo "current script arguments: $@"
+sleep 20 &
+echo "get the process id of the last background command: $!"
