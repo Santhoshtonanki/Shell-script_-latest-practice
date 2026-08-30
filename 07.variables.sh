@@ -1,3 +1,6 @@
+#!/bin/bash
+
+export TZ="Asia/Kolkata"
 Date=$(date)
 day=$(date +%A-%Y-%m-%d-%H-%M-%S)
 
@@ -8,6 +11,6 @@ start_time=$(date +%s)
 
 sleep 10
 
-end_time=$(date +%s)
+end_time=$(date +%s) 
 
 echo "Script execution time: $((end_time - start_time)) seconds"

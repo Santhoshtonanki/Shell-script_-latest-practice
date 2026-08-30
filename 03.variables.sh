@@ -1,3 +1,5 @@
+#!/bin/bash
+
 PERSON1=HEMANTH
 PERSON2=SANTHOSH
 
