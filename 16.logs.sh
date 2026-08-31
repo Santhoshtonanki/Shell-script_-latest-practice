@@ -21,10 +21,10 @@ fi
 
 VALIDATE() {
     if [ $1 -ne 0 ]; then
-        echo "$2 installation completely .......$R failure $N" | tee -a $LOG_FILE
+        echo -e "$2 installation completely .......$R failure $N" | tee -a $LOG_FILE
         exit 1
     else 
-        echo "$2 installation process completely ........$G successfully $N" | tee -a $LOG_FILE
+        echo -e "$2 installation process completely ........$G successfully $N" | tee -a $LOG_FILE
     fi
 }
 
@@ -33,7 +33,7 @@ if [ $? -ne 0 ]; then
     dnf install mysql -y &>>$LOG_FILE
     VALIDATE $? "mysql"
 else
-    echo "MYSQL already installed ........$Y skipping $N" | tee -a $LOG_FILE
+    echo -e "MYSQL already installed ........$Y skipping $N" | tee -a $LOG_FILE
 fi
 
 dnf list installed nginx &>>$LOG_FILE
@@ -41,7 +41,7 @@ if [ $? -ne 0 ]; then
     dnf install nginx -y &>>$LOG_FILE
     VALIDATE $? "Nginx"
 else 
-    echo "NGINX already installed .........$Y skipping $N" | tee -a $LOG_FILE
+    echo -e "NGINX already installed .........$Y skipping $N" | tee -a $LOG_FILE
 fi
 
 dnf list installed python3 &>>$LOG_FILE
@@ -49,5 +49,5 @@ if [ $? -ne 0 ]; then
     dnf install python3 -y &>>$LOG_FILE
     VALIDATE $? "python3"
 else
-    echo "PYTHON3 already installed .........$Y skipping $N" | tee -a $LOG_FILE
+    echo -e "PYTHON3 already installed .........$Y skipping $N" | tee -a $LOG_FILE
 fi
