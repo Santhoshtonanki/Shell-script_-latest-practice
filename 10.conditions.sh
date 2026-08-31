@@ -28,3 +28,9 @@ elif [ $NUMBER -eq 10 ]; then
 else 
     echo "The Given number $NUMBER is greater than 10"
 fi
+
+##condition + then should be mention after elif condition. 
+##Otherwise you will get syntax error
+
+##Adding "is -lt, /is -ge/, is -gt,.....etc" in between condition brackets "[ ]" is an error. 
+##we should use comparison operators directly in Shell script
