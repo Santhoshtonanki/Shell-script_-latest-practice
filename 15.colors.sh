@@ -29,7 +29,7 @@ dnf list installed mysql
 ## if mysql is not installed, then install it, otherwise skip the installation.
 if [ $? -ne 0 ]; then
     dnf install "mysql" -y
-    Validate "$?" "mysql"
+    Validate $? "mysql"
 else 
     echo -e "INFO:: MYSQL is already installed,........$Y Skipping $N the installation process"
 fi
@@ -38,7 +38,7 @@ dnf list installed nginx
 ## if nginx is not installed, then install it, otherwise skip the installation.
 if [ $? -ne 0 ]; then
     dnf install "nginx" -y
-    Validate "$?" "nginx"
+    Validate $? "nginx"
 else 
     echo -e "INFO:: NGINX is already installed,........ $Y Skipping $N the installation process"
 fi
@@ -47,20 +47,9 @@ dnf list installed docker
 ## if docker is not installed, then install it, otherwise skip the installation.
 if [ $? -ne 0 ]; then
     dnf install "docker" -y
-    Validate "$?" "docker"
+    Validate $? "docker"
 else 
     echo -e "INFO:: DOCKER is already installed,........ $Y Skipping $N the installation process"
 fi
-
-
-dnf list installed java
-## if docker is not installed, then install it, otherwise skip the installation.
-if [ $? -ne 0 ]; then
-    dnf install "java" -y
-    Validate "$?" "java"
-else 
-    echo -e "INFO:: JAVA is already installed,........ $Y Skipping $N the installation process"
-fi
-
 
 
