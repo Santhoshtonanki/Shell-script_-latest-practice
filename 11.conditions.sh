@@ -1,7 +1,7 @@
 #!/bin/bash
 
-##echo please enter a number:
-##read NUMBER
+echo please enter a number:
+read NUMBER
 
 ##NUMBER="$1"
 
@@ -20,7 +20,7 @@
 ## Or we  have to remove the line read NUMBER and then it will work fine.
 
 
-NUMBER="$1"
+##NUMBER="$1"
 
 if [ $((NUMBER % 2)) -eq 0 ]; then
     echo "The Given number, $NUMBER is EVEN"
