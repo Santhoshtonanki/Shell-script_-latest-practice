@@ -35,3 +35,6 @@ SUBJECTS=("Maths" "Science" "Social" "English" "Telugu")
 echo "The Subjects are: ${SUBJECTS[0]}"
 echo "The Subjects are: ${SUBJECTS[1]}"     
 echo "The Subjects are: ${SUBJECTS[4]}"
+echo "The Subjects are: ${SUBJECTS[@]}"  
+### In Course we have 5 courses, so we can store them in an array. 
+

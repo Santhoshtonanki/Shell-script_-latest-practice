@@ -17,6 +17,7 @@ echo "current process id: $$"
 echo "current script name: $0"
 echo "current script arguments: $@"
 sleep 20 &
+## & will help to run the command in background, so that we can run the next command without waiting for the previous command to complete.
 echo "get the process id of the last background command: $!"
 
 
