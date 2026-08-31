@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo please enter a number:
+read NUMBER
+
 NUMBER="$1"
 
 if [ $((NUMBER % 2)) -eq 0 ]; then
