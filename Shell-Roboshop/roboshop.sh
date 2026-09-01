@@ -7,4 +7,12 @@ DOMAIN_NAME="lylbwof.shop"
 
 for instance in "$@"
 do
-    aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SECURITY_GROUP_ID "Tags=[{key=NAME,value=$instance}]" --query "Instances[0].InstanceId" --output text
+    aws ec2 run-instances \
+    --image-id $AMI_ID \
+    --instance-type t2.micro \
+    --security-group-ids $SECURITY_GROUP_ID \
+    --count 1 \
+    --tag-specifications "Tags=[{Key=Name,Value=$instance}]" \
+    --query "Instances[0].InstanceId" \
+    --output text
+
