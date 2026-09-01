@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 AMI_ID="ami-0220d79f3f480ecf5"
 SECURITY_GROUP_ID="sg-055c71bb814fafb35"
@@ -8,11 +8,10 @@ DOMAIN_NAME="lylbwof.shop"
 for instance in "$@"
 do
     aws ec2 run-instances \
-    --image-id $AMI_ID \
+    --image-id "$AMI_ID" \
     --instance-type t2.micro \
-    --security-group-ids $SECURITY_GROUP_ID \
+    --security-group-ids "$SECURITY_GROUP_ID" \
     --count 1 \
     --tag-specifications "Tags=[{Key=Name,Value=$instance}]" \
     --query "Instances[0].InstanceId" \
     --output text
-
