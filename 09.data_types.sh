@@ -23,8 +23,7 @@ MUL=$((NUMBER1*NUMBER2*NAME))
 echo "the Multiplication is: $MUL"
 
 ## Array types
-## In Course we have 6 courses, so we can store them in an array.
-## size is 6, Maximum index is 5, Minimum index is 0
+## In Course we have 6 courses, so we can store them in an array.size is 6, Maximum index is 5, Minimum index is 0
 COURSE=("DevOps" "AWS" "Azure" "GCP" "Docker" "Kubernetes")
 echo "The Course is: ${COURSE[0]}"
 echo "The Course is: ${COURSE[1]}"
