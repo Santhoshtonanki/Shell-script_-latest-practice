@@ -9,7 +9,7 @@ for instance in "$@"
 do
     aws ec2 run-instances \
     --image-id "$AMI_ID" \
-    --instance-type t2.micro \
+    --instance-type t3.micro \
     --security-group-ids "$SECURITY_GROUP_ID" \
     --count 1 \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
