@@ -12,8 +12,7 @@ do
     --instance-type t2.micro \
     --security-group-ids "$SECURITY_GROUP_ID" \
     --count 1 \
-    --tag-specifications "Tags=[{Key=Name,Value=$instance}]" \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
     --query "Instances[0].InstanceId" \
     --output text
-
 done
