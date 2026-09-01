@@ -29,7 +29,7 @@ VALIDATE() {
     fi
 }
 
-for $package in "$@"
+for package in "$@" # we should not use $ before package.
 do
     dnf list installed $package &>>$LOG_FILE
     if [ $? -ne 0 ]; then
