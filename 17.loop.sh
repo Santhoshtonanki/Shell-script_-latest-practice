@@ -2,5 +2,5 @@
 
 for i in {1....2}
 do
-    echo "Hello World $i"
+    echo Hello World $i
 done
