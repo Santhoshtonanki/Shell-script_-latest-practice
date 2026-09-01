@@ -15,3 +15,5 @@ do
     --tag-specifications "Tags=[{Key=Name,Value=$instance}]" \
     --query "Instances[0].InstanceId" \
     --output text
+
+done
