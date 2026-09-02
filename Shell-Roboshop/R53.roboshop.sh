@@ -15,17 +15,17 @@ do
     --query "Instances[0].InstanceId" \
     --output text)
 
-    if [ $instances != "frontend" ]; then
+    if [ "$instances" != "frontend" ]; then
         ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
         echo "the current instance is not frontend, so providing private ip address for this instance $ip"
-        RECORD_NAME="$instances.lylbwof.shop"
-        echo "record name is $instances.lylbwof.shop"
+        RECORD_NAME="$instances.$DOMAIN_NAME"
+        echo "record name is $instances.$DOMAIN_NAME"
     
     else
         ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
         echo "the current instance is frontend, so providing public ip address for this instance $ip"
-        echo "record name is lylbwof.shop"
-        RECORD_NAME="$lylbwof.shop"
+        echo "record name is $DOMAIN_NAME"
+        RECORD_NAME="$DOMAIN_NAME"
     fi
     echo "$instances: $ip"
 
@@ -47,8 +47,6 @@ do
                 }
             }
         ]
-
-
-
+    }"
 done
 
