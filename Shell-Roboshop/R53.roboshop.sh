@@ -24,12 +24,31 @@ do
     else
         ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
         echo "the current instance is frontend, so providing public ip address for this instance $ip"
-        echo "record name is $instances.lylbwof.shop"
-        RECORD_NAME="$instances.lylbwof.shop"
+        echo "record name is lylbwof.shop"
+        RECORD_NAME="$lylbwof.shop"
     fi
     echo "$instances: $ip"
 
-    
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id "$HOSTED_ZONE_ID" \
+    --change-batch "{
+        \"Changes\": [
+            {
+                \"Action\": \"UPSERT\",
+                \"ResourceRecordSet\": {
+                    \"Name\": \"$RECORD_NAME\",
+                    \"Type\": \"A\",
+                    \"TTL\": 60,
+                    \"ResourceRecords\": [
+                        {
+                            \"Value\": \"$ip\"
+                        }
+                    ]
+                }
+            }
+        ]
+
+
 
 done
 
