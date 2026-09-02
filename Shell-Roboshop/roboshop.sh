@@ -5,13 +5,25 @@ SECURITY_GROUP="sg-0fc6e3e381d06a2a8"
 HOSTED_ZONE_ID="Z068858712AH0PK53FI2K"
 DOMAIN_NAME="lylbwof.shop"
 
-for instance in $@
+for instances in "$@"
 do
-    aws ec2 run-instances \
+    INSTANCE_ID=$(aws ec2 run-instances \
     --image-id "$AMI_ID" \
     --instance-type t3.micro \
     --security-group-ids "$SECURITY_GROUP" \
     --query "Instances[0].InstanceId" \
-    --output text
+    --output text)
+
+    if [ $instance != "frontend" ]; then
+        echo "the current instance is not frontend, so providing private ip address for this instance"
+        ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
+        RECORD_NAME="$instances.lylbwof.shop"
+    
+    else
+        ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
+        echo "the current instance is frontend, so providing public ip address for this instance"
+        RECORD_NAME="$instances.lylbwof.shop"
+    fi
 
 done
+
