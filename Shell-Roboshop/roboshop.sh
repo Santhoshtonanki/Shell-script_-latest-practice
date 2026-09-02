@@ -6,12 +6,11 @@ HOSTED_ZONE_ID="Z068858712AH0PK53FI2K"
 DOMAIN_NAME="lylbwof.shop"
 
 for instance in $@
-do 
+do
     aws ec2 run-instances \
     --image-id "$AMI_ID" \
     --instance-type t3.micro \
     --security-group-ids "$SECURITY_GROUP" \
-    --subnet-id subnet-xxxxxxxxxxxxxxxxx \
     --query "Instances[0].InstanceId" \
     --output text
 
