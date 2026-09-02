@@ -16,13 +16,15 @@ do
     --output text)
 
     if [ $instance != "frontend" ]; then
-        echo "the current instance is not frontend, so providing private ip address for this instance"
         ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
+        echo "the current instance is not frontend, so providing private ip address for this instance $ip"
         RECORD_NAME="$instances.lylbwof.shop"
+        echo "record name is $instances.lylbwof.shop"
     
     else
         ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
-        echo "the current instance is frontend, so providing public ip address for this instance"
+        echo "the current instance is frontend, so providing public ip address for this instance $ip"
+        echo "record name is $instances.lylbwof.shop"
         RECORD_NAME="$instances.lylbwof.shop"
     fi
 
