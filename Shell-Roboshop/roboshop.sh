@@ -11,6 +11,7 @@ do
     --image-id "$AMI_ID" \
     --instance-type t3.micro \
     --security-group-ids "$SECURITY_GROUP" \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instances}]" \
     --query "Instances[0].InstanceId" \
     --output text)
 
