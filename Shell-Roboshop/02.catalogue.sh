@@ -96,6 +96,22 @@ VALIDATE() {
 
     systemctl is-active --quiet catalogue
     VALIDATE $? "checking the status of catalogue service is active or not"
+
+    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/01.mongodb.repo \
+        /etc/yum.repos.d/01.mongodb.repo &>>"$LOG_FILE"
+    VALIDATE $? "01.mongodb.repo file copied $G Successfully $N"
+
+    dnf clean all
+    VALIDATE $? "cleaning the dnf cache"
+
+    dnf makecache
+    VALIDATE $? "making the dnf cache"
+
+    dnf repolist | grep -i mongo
+    VALIDATE $? "checking the mongodb repo is available or not"
+    
+    dnf search mongosh
+    VALIDATE $? "checking the mongosh package is available or not"
     
     dnf install mongodb-mongosh -y &>>"$LOG_FILE"
     VALIDATE $? "installing mongodb-mongosh"
