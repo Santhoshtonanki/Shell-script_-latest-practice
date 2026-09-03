@@ -13,9 +13,12 @@ DOMAIN_NAME="lylbwof.shop"
 USER_ADD="roboshop"
 
 
+rm -rf $LOG_FOLDER
+VALIDATE $? "removing the $LOG_FOLDER directory"
 
 
-mkdir -p $LOG_FOLDER | tee -a $LOG_FILE
+
+mkdir -p $LOG_FOLDER | tee -a $LOG_FILEx
 echo "script started executed $(date)" | tee -a $LOG_FILE
 
 
