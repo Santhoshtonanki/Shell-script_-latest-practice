@@ -43,7 +43,7 @@ VALIDATE() {
     
     rm -rf /etc/systemd/system/catalogue.service
     VALIDATE $? "removing catalogue.service file from /etc/systemd/system/"
-    
+
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
     VALIDATE $? "copying catalogue.service file into /etc/systemd/system/"
 
@@ -75,8 +75,14 @@ VALIDATE() {
     VALIDATE $? "enabling catalogue"
 
 
-    systemctl start catalogue &>>"$LOG_FILE"
+    systemctl restart catalogue &>>"$LOG_FILE"
     VALIDATE $? "starting catalogue"
+
+    systemctl status catalogue &>>"$LOG_FILE"
+    VALIDATE $? "checking the status of catalogue service"
+
+    systemctl is-active --quiet catalogue
+    VALIDATE $? "checking the status of catalogue service is active or not"
     
     dnf install mongodb-mongosh -y &>>"$LOG_FILE"
     VALIDATE $? "installing mongodb-mongosh"
