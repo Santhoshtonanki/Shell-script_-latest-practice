@@ -10,6 +10,7 @@ LOG_FOLDER="/var/log/roboshop"
 SCRIPT_NAME=$(basename "$0" | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 USER_ADD="roboshop"
+DOMAINE_NAME="lylbwof.shop"
 
 
 mkdir -p "$LOG_FOLDER" | tee -a "$LOG_FILE"
