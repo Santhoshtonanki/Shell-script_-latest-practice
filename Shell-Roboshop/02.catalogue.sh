@@ -20,10 +20,10 @@ fi
 
 VALIDATE() {
     if [ $1 -ne 0 ]; then
-        echo "$2 installing ..........$R failure $N" | tee -a "$LOG_FILE"
+        echo -e "$2 installing ..........$R failure $N" | tee -a "$LOG_FILE"
         exit 1
     else
-        echo "$2 installing ...........$G success $N" | tee -a "$LOG_FILE"
+        echo -e "$2 installing ...........$G success $N" | tee -a "$LOG_FILE"
     fi
 }
 
@@ -39,9 +39,11 @@ VALIDATE() {
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     
     mkdir -p /app 
-    VALIDATE $? "creating APP directory"
-    echo "command is executed at $(date '+%d-%m-%Y %H:%M:%S')" | tee -a "$LOG_FILE"
-
+    VALIDATE $? "creating APP directory $(date '+%d-%m-%Y %H:%M:%S')" | tee -a "$LOG_FILE"
+    
+    rm -rf /etc/systemd/system/catalogue.service
+    VALIDATE $? "removing catalogue.service file from /etc/systemd/system/"
+    
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
     VALIDATE $? "copying catalogue.service file into /etc/systemd/system/"
 
@@ -70,14 +72,14 @@ VALIDATE() {
     systemctl daemon-reload
     
     systemctl enable catalogue &>>"$LOG_FILE"
-    $VALIDATE $? "enabling catalogue"
+    VALIDATE $? "enabling catalogue"
 
 
     systemctl start catalogue &>>"$LOG_FILE"
-    $VALIDATE $? "starting catalogue"
+    VALIDATE $? "starting catalogue"
     
     dnf install mongodb-mongosh -y &>>"$LOG_FILE"
-    $VALIDATE $? "installing mongodb-mongosh"
+    VALIDATE $? "installing mongodb-mongosh"
 
 
     #mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js
