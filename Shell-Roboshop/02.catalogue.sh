@@ -120,17 +120,14 @@ VALIDATE() {
     VALIDATE $? "installing mongodb-mongosh"
 
     mongosh --host "mongodb.lylbwof.shop" </app/db/master-data.js
-    VALIDATE $? "importing the catalogue data into mongodb"
+    VALIDATE $? "importing the master-data.js into mongodb"
 
-
+    mongosh --host "mongodb.lylbwof.shop" <<EOF
     show dbs
-    VALIDATE $? "showing databases"
-    
     use catalogue
-    VALIDATE $? "switching to catalogue database"
-    
-    show collections
-    VALIDATE $? "showing collections"
-    
+    show collections   
     db.products.find()
-    VALIDATE $? "showing products collection data"
+    EOF
+
+
+    
