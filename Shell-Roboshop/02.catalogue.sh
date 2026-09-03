@@ -100,10 +100,19 @@ VALIDATE() {
     dnf install mongodb-mongosh -y &>>"$LOG_FILE"
     VALIDATE $? "installing mongodb-mongosh"
 
+    mongosh --host "$ip" </app/db/master-data.js
+    VALIDATE $? "importing the catalogue data into mongodb"
 
-    #mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js
-    #mongosh --host MONGODB-SERVER-IPADDRESS
-    #show dbs
-    #use catalogue
-    #show collections
-    #db.products.find()
+
+    mongosh --host "$ip" </app/db/master-data.js
+    show dbs
+    VALIDATE $? "showing databases"
+    
+    use catalogue
+    VALIDATE $? "switching to catalogue database"
+    
+    show collections
+    VALIDATE $? "showing collections"
+    
+    db.products.find()
+    VALIDATE $? "showing products collection data"
