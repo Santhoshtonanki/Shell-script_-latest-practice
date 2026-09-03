@@ -24,6 +24,7 @@ VALIDATE() {
         exit 1
     else
         echo "$2 installing ...........$G success $N" | tee -a "$LOG_FILE"
+    fi
 }
 
     dnf module disable nodejs -y &>>"$LOG_FILE"
