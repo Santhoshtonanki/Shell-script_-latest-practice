@@ -44,6 +44,9 @@ VALIDATE() {
     rm -rf /etc/systemd/system/catalogue.service
     VALIDATE $? "removing catalogue.service file from /etc/systemd/system/"
 
+    mkdir -p /etc/systemd/system/catalogue.service
+    VALIDATE $? "creating catalogue.service file into /etc/systemd/system/"
+
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
     VALIDATE $? "copying catalogue.service file into /etc/systemd/system/"
 
@@ -76,7 +79,7 @@ VALIDATE() {
 
 
     systemctl restart catalogue &>>"$LOG_FILE"
-    VALIDATE $? "starting catalogue"
+    VALIDATE $? "restarting catalogue"
 
     systemctl status catalogue &>>"$LOG_FILE"
     VALIDATE $? "checking the status of catalogue service"
