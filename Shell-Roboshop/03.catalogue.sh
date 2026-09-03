@@ -15,7 +15,7 @@ USER_ADD="roboshop"
 
 
 
-mkdir -p "$LOG_FOLDER" | tee -a ""$LOG_FILE""
+mkdir -p "$LOGS_FOLDER" | tee -a ""$LOG_FILE""
 echo "script started executed $(date)" | tee -a ""$LOG_FILE""
 
 
@@ -32,6 +32,7 @@ VALIDATE() {
         exit 1
     else
         echo -e "$2 installing .......$G success $N" | tee -a "$LOG_FILE"
+    fi
 }
 
 
@@ -63,7 +64,7 @@ fi
 
 
 
-rm -rf /app/* &>>LOG_FILE
+rm -rf /app/* &>>"$LOG_FILE"
 VALIDATE $? "deleting the app directory"
 
 mkdir -p /app &>>"$LOG_FILE"
@@ -88,10 +89,10 @@ VALIDATE $? "unzipping the catalogue.zip file"
 
 
 
-rm -rf /etc/systemd/system/*
+rm -rf /etc/systemd/system/catalogue.service
 VALIDATE $? "deleting all system files"
 
-mkdir -p /etc/systemd/system/catalogue.service
+mkdir -p /etc/systemd/system
 VALIDATE $? "creating /etc/systemd/system directory"
 
 cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
@@ -136,13 +137,13 @@ VALIDATE $? "starting teh catalogue services"
 
 
 dnf install mongodb-mongosh -y &>>"$LOG_FILE"
-Validate $? "installing mongodb-mongosh" 
+VALIDATE $? "installing mongodb-mongosh" 
 
-mongosh --host mongodb.$DOMAINE_NAME </app/db/master-data.js &>>"$LOG_FILE"
+mongosh --host mongodb."$DOMAIN_NAME" </app/db/master-data.js &>>"$LOG_FILE"
 VALIDATE $? " trying to  connect mongodb server"
 
 
-mongosh --host mongodb.$DOMAINE_NAME &>>"$LOG_FILE"
+mongosh --host mongodb."$DOMAIN_NAME" <<EOF
 show dbs
 use catalogue
 show collections
