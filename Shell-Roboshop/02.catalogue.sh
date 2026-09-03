@@ -112,15 +112,14 @@ VALIDATE() {
     
     dnf search mongosh
     VALIDATE $? "checking the mongosh package is available or not"
-    
+
     dnf install mongodb-mongosh -y &>>"$LOG_FILE"
     VALIDATE $? "installing mongodb-mongosh"
 
-    mongosh --host "$ip" </app/db/master-data.js
+    mongosh --host "mongodb.lylbwof.shop" </app/db/master-data.js
     VALIDATE $? "importing the catalogue data into mongodb"
 
 
-    mongosh --host "$ip" </app/db/master-data.js
     show dbs
     VALIDATE $? "showing databases"
     
