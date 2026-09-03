@@ -9,6 +9,8 @@ USER_ID="$(id -u)"
 LOG_FOLDER="/var/log/roboshop"
 SCRIPT_NAME=$(basename "$0" | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
+USER_ADD="roboshop"
+
 
 mkdir -p "$LOG_FOLDER" | tee -a "$LOG_FILE"
 echo "script execution started at $(date '+%d-%m-%Y %H:%M:%S')" | tee -a "$LOG_FILE"
@@ -37,15 +39,24 @@ VALIDATE() {
     VALIDATE $? "installing nodejs"
 
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    if [ $? -ne 0 ]; then
+        echo -e "$Y roboshop user already exists, skipping the user creation $N" | tee -a "$LOG_FILE"
+    else
+        echo -e "$G roboshop user created successfully $N" | tee -a "$LOG_FILE"
+    fi
+    
     
     mkdir -p /app 
     VALIDATE $? "creating APP directory $(date '+%d-%m-%Y %H:%M:%S')" | tee -a "$LOG_FILE"
+
+    chown -R roboshop:roboshop /app
+    VALIDATE $? "changing ownership of /app"
     
     rm -rf /etc/systemd/system/catalogue.service
     VALIDATE $? "removing catalogue.service file from /etc/systemd/system/"
 
-    mkdir -p /etc/systemd/system/catalogue.service
-    VALIDATE $? "creating catalogue.service file into /etc/systemd/system/"
+    mkdir -p /etc/systemd/system/
+    VALIDATE $? "creating /etc/systemd/system/ directory"
 
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
     VALIDATE $? "copying catalogue.service file into /etc/systemd/system/"
@@ -69,10 +80,11 @@ VALIDATE() {
 
 
     npm install &>>"$LOG_FILE"
-    VALIDATE $? "installing node package management npm"
+    VALIDATE $? "installing npm dependencies"
 
 
     systemctl daemon-reload
+    VALIDATE $? "reloading the systemctl daemon"
     
     systemctl enable catalogue &>>"$LOG_FILE"
     VALIDATE $? "enabling catalogue"
@@ -81,8 +93,6 @@ VALIDATE() {
     systemctl restart catalogue &>>"$LOG_FILE"
     VALIDATE $? "restarting catalogue"
 
-    systemctl status catalogue &>>"$LOG_FILE"
-    VALIDATE $? "checking the status of catalogue service"
 
     systemctl is-active --quiet catalogue
     VALIDATE $? "checking the status of catalogue service is active or not"
