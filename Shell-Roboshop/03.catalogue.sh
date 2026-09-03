@@ -15,8 +15,8 @@ USER_ADD="roboshop"
 
 
 
-mkdir -p $LOG_Folder &>>$LOG_FILE
-echo "script started executed $date)" | tee -a $LOG_FILE
+mkdir -p $LOG_FOLDER | tee -a $LOG_FILE
+echo "script started executed $(date)" | tee -a $LOG_FILE
 
 
 
