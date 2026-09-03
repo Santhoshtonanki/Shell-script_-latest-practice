@@ -5,7 +5,7 @@ G="\e[32m"
 Y="\e[33m]"
 N="\e[0m"
 
-USERID="$(id -u)"
+USER_ID="$(id -u)"
 LOGS_FOLDER="/var/log/shell-Roboshop"
 SCRIPT_FILE=$( echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_FILE.log"
