@@ -51,6 +51,9 @@ VALIDATE() {
     VALIDATE $? "mongodb-org restarted $G Successfully $N"
 
 
-    curl http://localhost:27017 &>>"$LOG_FILE"
-    VALIDATE $? "mongodb-org curl $G Successfully $N"
+    systemctl is-active --quiet mongod
+    VALIDATE $? "MongoDB service is running"
+
+    ss -lntp | grep 27017 &>>"$LOG_FILE"
+    VALIDATE $? "MongoDB listening on port 27017"
 
