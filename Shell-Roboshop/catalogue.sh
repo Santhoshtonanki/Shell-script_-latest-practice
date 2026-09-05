@@ -61,6 +61,10 @@ VALIDATE() {
     mkdir -p /etc/systemd/system/
     VALIDATE $? "creating /etc/systemd/system/ directory"
 
+     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongo.repo \
+        /etc/yum.repos.d/mongo.repo &>>""$LOG_FILE""
+    VALIDATE $? "mongo.repo file copied $G Successfully $N"
+
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
     VALIDATE $? "copying catalogue.service file into /etc/systemd/system/"
 
@@ -69,6 +73,7 @@ VALIDATE() {
 
     curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>""$LOG_FILE""
     VALIDATE $? "downloaded Catalogue.zip"
+
 
 
 
@@ -100,12 +105,7 @@ VALIDATE() {
     systemctl is-active --quiet catalogue
     VALIDATE $? "checking the status of catalogue service is active or not"
 
-    rm -rf /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
-    VALIDATE $? "mongodb.repo file removed $G Successfully $N"
-
-    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongodb.repo \
-        /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
-    VALIDATE $? "mongodb.repo file copied $G Successfully $N"
+    
 
     dnf clean all
     VALIDATE $? "cleaning the dnf cache"

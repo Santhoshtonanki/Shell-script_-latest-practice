@@ -32,8 +32,8 @@ VALIDATE() {
     rm -rf /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
     VALIDATE $? "mongodb.repo file removed $G Successfully $N"
 
-    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongodb.repo \
-        /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
+    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongo.repo \
+        /etc/yum.repos.d/mongo.repo &>>""$LOG_FILE""
     VALIDATE $? "mongodb.repo file copied $G Successfully $N"
 
     dnf install mongodb-org -y &>>""$LOG_FILE""
