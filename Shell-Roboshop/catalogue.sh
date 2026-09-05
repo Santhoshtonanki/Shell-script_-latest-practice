@@ -5,6 +5,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+STARTTIME=$(date +%s)
+
 USER_ID="$(id -u)"
 LOG_FOLDER="/var/log/roboshop"
 SCRIPT_NAME=$(basename "$0" | cut -d "." -f1)
@@ -123,12 +125,15 @@ VALIDATE() {
     mongosh --host "mongodb.lylbwof.shop" </app/db/master-data.js
     VALIDATE $? "importing the master-data.js into mongodb"
 
-    mongosh --host "mongodb.lylbwof.shop" <<EOF
-    show dbs
-    use catalogue
-    show collections   
-    db.products.find()
-    EOF
+    ENDTIME=$(date +%s)
+    TOTAL_TIME=$(("$ENDTIME" - "$STARTTIME"))
+    echo -e "$Y" "Total time taken to execute the script is $TOTAL_TIME seconds" "$N" | tee -a ""$LOG_FILE""
 
+    mongosh --host "mongodb.lylbwof.shop" <<EOF
+        show dbs
+        use catalogue
+        show collections
+        db.products.find()
+        EOF
 
     
