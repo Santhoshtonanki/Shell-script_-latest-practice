@@ -110,13 +110,13 @@ VALIDATE() {
     dnf clean all
     VALIDATE $? "cleaning the dnf cache"
 
-    dnf makecache
+    dnf makecache &>>""$LOG_FILE""
     VALIDATE $? "making the dnf cache"
 
-    dnf repolist | grep -i mongo
+    dnf repolist | grep -i mongo &>>""$LOG_FILE""
     VALIDATE $? "checking the mongodb repo is available or not"
     
-    dnf search mongosh
+    dnf search mongosh &>>""$LOG_FILE""
     VALIDATE $? "checking the mongosh package is available or not"
 
     dnf install mongodb-mongosh -y &>>""$LOG_FILE""
