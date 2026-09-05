@@ -1,5 +1,11 @@
 #!/bin/bash
 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
+
 STARTTIME=$(date +%s)
 echo -e "Script execution started at : $Y$(date)$N" | tee -a ""$LOG_FILE""
 
@@ -25,7 +31,7 @@ VALIDATE() {
 
 
 mkdir -p "$LOGS_FOLDER"
-echo -e "Logs folder created at : $Y$LOGS_FOLDER$N" | tee -a ""$LOG_FILE""
+echo -e "Logs folder created at : $Y $LOGS_FOLDER $N" | tee -a ""$LOG_FILE""
 
 dnf module disable redis -y &>>""$LOG_FILE""
 VALIDATE $? "disabling redis"
@@ -45,8 +51,6 @@ VALIDATE $? "enabling redis"
 systemctl restart redis &>>""$LOG_FILE""
 VALIDATE $? "starting redis"
 
-curl -s http://localhost:6379 | grep PONG &>>""$LOG_FILE""
-VALIDATE $? "checking redis service is running or not"
 
 netstat -lntp | grep 6379 &>>""$LOG_FILE""
 VALIDATE $? "checking if redis is listening on port 6379"
