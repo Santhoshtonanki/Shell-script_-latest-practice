@@ -107,7 +107,7 @@ VALIDATE() {
 
     
 
-    dnf clean all
+    dnf clean all &>>""$LOG_FILE""
     VALIDATE $? "cleaning the dnf cache"
 
     dnf makecache &>>""$LOG_FILE""
@@ -129,11 +129,5 @@ VALIDATE() {
     TOTAL_TIME=$(("$ENDTIME" - "$STARTTIME"))
     echo -e "$Y" "Total time taken to execute the script is $TOTAL_TIME seconds" "$N" | tee -a ""$LOG_FILE""
 
-    mongosh --host "mongodb.lylbwof.shop" <<EOF
-        show dbs
-        use catalogue
-        show collections
-        db.products.find()
-        EOF
 
     
