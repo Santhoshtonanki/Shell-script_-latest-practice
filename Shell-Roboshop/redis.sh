@@ -23,28 +23,28 @@ VALIDATE() {
     fi
 }
 
-dnf module disable redis -y
+dnf module disable redis -y &>>""$LOG_FILE""
 VALIDATE $? "disabling redis"
 
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y &>>""$LOG_FILE""   
 VALIDATE $? "enabling redis 7"
 
-dnf install redis -y 
+dnf install redis -y &>>""$LOG_FILE""
 VALIDATE $? "installing redis"
 
 sed -i -e 's/127.0.0.1/0.0.0.0/g' -e 's/protected-mode yes/protected-mode no/g' /etc/redis/redis.conf
 VALIDATE $? "configuring redis"
 
-systemctl enable redis 
+systemctl enable redis &>>""$LOG_FILE""
 VALIDATE $? "enabling redis"
 
-systemctl start redis 
+systemctl restart redis &>>""$LOG_FILE""
 VALIDATE $? "starting redis"
 
-curl -s http://localhost:6379 | grep PONG
+curl -s http://localhost:6379 | grep PONG &>>""$LOG_FILE""
 VALIDATE $? "checking redis service is running or not"
 
-netstat -plntu | grep 6379
+netstat -lntp | grep 6379 &>>""$LOG_FILE""
 VALIDATE $? "checking if redis is listening on port 6379"
 
 
