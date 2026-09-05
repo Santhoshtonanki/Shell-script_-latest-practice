@@ -59,11 +59,8 @@ VALIDATE() {
     systemctl is-active --quiet mongod
     VALIDATE $? "MongoDB service is running"
 
-    if curl -sf http://localhost:27107/health > /dev/null; then
-        echo "Server is healthy"
-    else
-        echo "Server is DOWN"
-    fi
+    systemctl status mongod &>>""$LOG_FILE""
+    VALIDATE $? "checking the status of mongodb service is active or not"
 
     ENDTIME=$(date +%s)
     TOTAL_TIME=$(("$ENDTIME"-"$STARTTIME"))
