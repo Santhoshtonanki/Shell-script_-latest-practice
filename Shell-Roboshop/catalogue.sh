@@ -98,12 +98,12 @@ VALIDATE() {
     systemctl is-active --quiet catalogue
     VALIDATE $? "checking the status of catalogue service is active or not"
 
-    rm -rf /etc/yum.repos.d/01.mongodb.repo &>>""$LOG_FILE""
-    VALIDATE $? "01.mongodb.repo file removed $G Successfully $N"
+    rm -rf /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
+    VALIDATE $? "mongodb.repo file removed $G Successfully $N"
 
-    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/01.mongodb.repo \
-        /etc/yum.repos.d/01.mongodb.repo &>>""$LOG_FILE""
-    VALIDATE $? "01.mongodb.repo file copied $G Successfully $N"
+    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongodb.repo \
+        /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
+    VALIDATE $? "mongodb.repo file copied $G Successfully $N"
 
     dnf clean all
     VALIDATE $? "cleaning the dnf cache"

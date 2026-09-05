@@ -27,12 +27,12 @@ VALIDATE() {
     fi
 }
 
-    rm -rf /etc/yum.repos.d/01.mongodb.repo &>>""$LOG_FILE""
-    VALIDATE $? "01.mongodb.repo file removed $G Successfully $N"
+    rm -rf /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
+    VALIDATE $? "mongodb.repo file removed $G Successfully $N"
 
-    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/01.mongodb.repo \
-        /etc/yum.repos.d/01.mongodb.repo &>>""$LOG_FILE""
-    VALIDATE $? "01.mongodb.repo file copied $G Successfully $N"
+    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongodb.repo \
+        /etc/yum.repos.d/mongodb.repo &>>""$LOG_FILE""
+    VALIDATE $? "mongodb.repo file copied $G Successfully $N"
 
     dnf install mongodb-org -y &>>""$LOG_FILE""
     VALIDATE $? "mongodb-org installed $G Successfully $N"
@@ -44,7 +44,7 @@ VALIDATE() {
     systemctl start mongod &>>""$LOG_FILE""     
     VALIDATE $? "mongodb-org started $G Successfully $N"
 
-    sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
+    sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
     VALIDATE $? "mongodb-org bind address changed $G Successfully $N"
 
     systemctl restart mongod &>>""$LOG_FILE""
