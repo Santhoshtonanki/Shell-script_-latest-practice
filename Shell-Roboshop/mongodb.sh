@@ -5,6 +5,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+STARTTIME=$(date +%s)
+
 USER_ID="$(id -u)"
 LOGS_FOLDER="/var/log/shell-Roboshop"
 SCRIPT_FILE=$( echo $0 | cut -d "." -f1)
@@ -54,4 +56,13 @@ VALIDATE() {
     systemctl is-active --quiet mongod
     VALIDATE $? "MongoDB service is running"
 
+    if curl -sf http://localhost:27107/health > /dev/null; then
+        echo "Server is healthy"
+    else
+        echo "Server is DOWN"
+    fi
+
+    ENDTIME=$(date +%s)
+    TOTAL_TIME=$(("$ENDTIME"-"$STARTTIME"))
+    echo -e "$Y" "Total time taken to execute the script is $TOTAL_TIME seconds" "$N" | tee -a ""$LOG_FILE""
     
