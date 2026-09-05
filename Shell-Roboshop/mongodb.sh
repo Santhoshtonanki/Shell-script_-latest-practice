@@ -49,6 +49,9 @@ VALIDATE() {
     sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
     VALIDATE $? "mongodb-org bind address changed $G Successfully $N"
 
+    systemctl daemon-reload &>>""$LOG_FILE""
+    VALIDATE $? "mongodb-org daemon reloaded $G Successfully $N"
+
     systemctl restart mongod &>>""$LOG_FILE""
     VALIDATE $? "mongodb-org restarted $G Successfully $N"
 
