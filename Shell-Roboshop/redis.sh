@@ -23,6 +23,10 @@ VALIDATE() {
     fi
 }
 
+
+mkdir -p "$LOGS_FOLDER"
+echo -e "Logs folder created at : $Y$LOGS_FOLDER$N" | tee -a ""$LOG_FILE""
+
 dnf module disable redis -y &>>""$LOG_FILE""
 VALIDATE $? "disabling redis"
 
