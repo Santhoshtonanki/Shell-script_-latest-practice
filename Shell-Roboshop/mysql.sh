@@ -50,3 +50,6 @@ VALIDATE $? "mysql_secure_installation"
 netstat -lntp | grep 3306 &>>""$LOG_FILE""
 VALIDATE $? "checking if mysql is listening on port 3306"
 
+ENDTIME=$(date +%s)
+TOTAL_TIME=$(("$ENDTIME" - "$STARTTIME"))
+echo -e "$Y" "Total time taken to execute the script is $TOTAL_TIME seconds" "$N" | tee -a ""$LOG_FILE""
