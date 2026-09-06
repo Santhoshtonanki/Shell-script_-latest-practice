@@ -67,6 +67,7 @@ VALIDATE() {
     systemctl restart nginx &>>"$LOG_FILE"
     VALIDATE $? "restarting nginx"
 
-    END_TIME="($date +%s)"
+    END_TIME="$(date +%s)"
     TOTAL_TIME="$(("$END_TIME" - "$START_TIME"))" | tea -a "$LOG_FILE"
+
     echo "total executed time for installing "$TOTAL_TIME"
