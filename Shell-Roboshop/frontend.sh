@@ -17,7 +17,6 @@ DOMAINE_NAME="lylbwof.shop"
 
 mkdir -p "$LOG_FOLDER" | tee -a "$LOG_FILE"
 echo "script execution started at $(date '+%d-%m-%Y %H:%M:%S')" | tee -a "$LOG_FILE"
-VALIDATE $? "creating "$LOG_FOLDER" directory"
 
 if [ "$USER_ID" -ne 0 ]; then
   echo -e "$R You should run this script as root user or with sudo privileges $N" | tee -a "$LOG_FILE"
