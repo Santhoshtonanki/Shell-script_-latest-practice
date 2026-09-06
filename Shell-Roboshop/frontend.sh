@@ -35,7 +35,7 @@ VALIDATE() {
     dnf module disable nginx -y &>>""$LOG_FILE""
     VALIDATE $? "disabling nginx"
 
-    dnf module enable nginx:20 -y &>>""$LOG_FILE""
+    dnf module enable nginx:1.24 -y &>>""$LOG_FILE""
     VALIDATE $? "enabling nginx 20"
 
 
