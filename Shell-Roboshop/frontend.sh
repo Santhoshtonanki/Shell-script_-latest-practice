@@ -36,7 +36,8 @@ VALIDATE() {
     VALIDATE $? "disabling nginx"
 
     dnf module enable nginx -y &>>""$LOG_FILE""
-    VALIDATE $? "enabling nginx 20"
+    VALIDATE $? "enabling nginx"
+    
 
     dnf install nginx -y &>>""$LOG_FILE""
     VALIDATE $? "installing nginx"
