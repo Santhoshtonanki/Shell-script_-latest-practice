@@ -52,7 +52,7 @@ VALIDATE() {
 
     rm -rf /app
     VALIDATE $? "removing app directory"
-    
+
     mkdir -p /app
     VALIDATE $? "creating APP directory $(date '+%d-%m-%Y %H:%M:%S')" | tee -a ""$LOG_FILE""
 
@@ -73,7 +73,7 @@ VALIDATE() {
     VALIDATE $? "unzipping user zip file"
 
 
-    cp /home/centos/Shell-script/Shell-script_-latest-practice/Shell-Roboshop/systemd/user.service /etc/systemd/system/user.service
+    cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/user.service  /etc/systemd/system/user.service
     VALIDATE $? "copying user.service file"
 
     npm install $>>""$LOG_FILE""
