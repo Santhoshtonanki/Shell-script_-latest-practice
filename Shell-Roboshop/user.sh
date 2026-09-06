@@ -49,6 +49,10 @@ VALIDATE() {
         echo -e "$G roboshop user created successfully $N" | tee -a ""$LOG_FILE""
     fi
 
+
+    rm -rf /app
+    VALIDATE $? "removing app directory"
+    
     mkdir -p /app
     VALIDATE $? "creating APP directory $(date '+%d-%m-%Y %H:%M:%S')" | tee -a ""$LOG_FILE""
 
