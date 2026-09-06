@@ -41,12 +41,6 @@ VALIDATE() {
     dnf install nodejs -y &>>""$LOG_FILE""
     VALIDATE $? "installing nodejs"
 
-    systemctl enable catalogue &>>""$LOG_FILE""
-    VALIDATE $? "enabling catalogue"
-    
-
-    systemctl restart catalogue &>>""$LOG_FILE""
-    VALIDATE $? "restarting catalogue"
 
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     if [ $? -ne 0 ]; then
