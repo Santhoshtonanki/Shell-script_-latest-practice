@@ -6,7 +6,6 @@ Y="\e[33m"
 N="\e[0m"
 
 STARTTIME=$(date +%s)
-
 USER_ID="$(id -u)"
 LOG_FOLDER="/var/log/roboshop"
 SCRIPT_NAME=$(basename "$0" | cut -d "." -f1)
@@ -32,6 +31,7 @@ VALIDATE() {
     fi
 }
 
+
     dnf module disable nodejs -y &>>""$LOG_FILE""
     VALIDATE $? "disabling nodejs"
 
@@ -41,12 +41,11 @@ VALIDATE() {
     dnf install nodejs -y &>>""$LOG_FILE""
     VALIDATE $? "installing nodejs"
 
-    systemctl enable catalogue &>>""$LOG_FILE""
-    VALIDATE $? "enabling catalogue"
+    systemctl enable nginx 
+    VALIDATE $? "enabling nginx"
 
-
-    systemctl restart catalogue &>>""$LOG_FILE""
-    VALIDATE $? "restarting catalogue"
+    systemctl start nginx 
+    VALIDATE $? "starting nginx"
 
     rm -rf /usr/share/nginx/html/* 
     VALIDATE $? "removing existing content from /usr/share/nginx/html"
@@ -60,11 +59,14 @@ VALIDATE() {
     unzip /tmp/frontend.zip
     VALIDATE $? "unzipping frontend zip file"
 
-    vim /etc/nginx/nginx.conf
-    VALIDATE $? "editing nginx.conf file"
 
     systemctl daemon-reload &>>""$LOG_FILE""
     VALIDATE $? "reloading systemctl daemon"
 
     systemctl restart nginx &>>""$LOG_FILE""
     VALIDATE $? "restarting nginx"
+
+    END_TIME="($date +%s)"
+
+    TOTAL_TIME="(("$END_TIME") - ("$START_TIME"))
+    echo "total executed time for installing "$TOTAL_TIME"
