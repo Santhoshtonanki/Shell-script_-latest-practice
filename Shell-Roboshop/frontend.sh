@@ -5,7 +5,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-STARTTIME=$(date +%s)
+START_TIME=$(date +%s)
+echo "execution starting time"
 USER_ID="$(id -u)"
 LOG_FOLDER="/var/log/roboshop"
 SCRIPT_NAME=$(basename "$0" | cut -d "." -f1)
@@ -14,20 +15,21 @@ USER_ADD="roboshop"
 DOMAINE_NAME="lylbwof.shop"
 
 
-mkdir -p "$LOG_FOLDER" | tee -a ""$LOG_FILE""
-echo "script execution started at $(date '+%d-%m-%Y %H:%M:%S')" | tee -a ""$LOG_FILE""
+mkdir -p "$LOG_FOLDER" | tee -a "$LOG_FILE"
+echo "script execution started at $(date '+%d-%m-%Y %H:%M:%S')" | tee -a "$LOG_FILE"
+VALIDATE $? "creating "$LOG_FOLDER" directory"
 
 if [ "$USER_ID" -ne 0 ]; then
-  echo -e "$R You should run this script as root user or with sudo privileges $N" | tee -a ""$LOG_FILE""
+  echo -e "$R You should run this script as root user or with sudo privileges $N" | tee -a "$LOG_FILE"
   exit 1
 fi
 
 VALIDATE() {
     if [ $1 -ne 0 ]; then
-        echo -e "$2 installing ..........$R failure $N" | tee -a ""$LOG_FILE""
+        echo -e "$2 installing ..........$R failure $N" | tee -a "$LOG_FILE"
         exit 1
     else
-        echo -e "$2 installing ...........$G success $N" | tee -a ""$LOG_FILE""
+        echo -e "$2 installing ...........$G success $N" | tee -a "$LOG_FILE"
     fi
 }
 
@@ -36,7 +38,7 @@ VALIDATE() {
     VALIDATE $? "disabling nginx"
 
     dnf module enable nginx:1.24 -y &>>"$LOG_FILE"
-    VALIDATE $? "enabling nginx 20"
+    VALIDATE $? "enabling nginx 1.24"
 
 
     dnf install nginx -y &>>"$LOG_FILE"
@@ -69,6 +71,6 @@ VALIDATE() {
 
 
 
-    END_TIME="$(date +%s)"
-    TOTAL_TIME=$((END_TIME - STARTTIME))
-    echo "total executed time for installing "$TOTAL_TIME"
+    END_TIME=$(date +%s)
+    TOTAL_TIME=$(($END_TIME - $START_TIME))
+    echo "total executed time for installing $TOTAL_TIME seconds" | tee -a "$LOG_FILE"
