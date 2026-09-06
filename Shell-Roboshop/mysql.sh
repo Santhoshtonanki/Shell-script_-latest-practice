@@ -44,7 +44,7 @@ mysql_secure_installation --set-root-pass RoboShop@1
 VALIDATE $? "mysql_secure_installation"
 
 
-netstat -lntp | grep 3306 &>>""$LOG_FILE""
+netstat -lntp | grep 3306 &>>"$LOG_FILE"
 VALIDATE $? "checking if mysql is listening on port 3306"
 
 ENDTIME=$(date +%s)

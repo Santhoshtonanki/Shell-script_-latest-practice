@@ -33,26 +33,26 @@ VALIDATE() {
 mkdir -p "$LOGS_FOLDER"
 echo -e "Logs folder created at : $Y $LOGS_FOLDER $N" | tee -a ""$LOG_FILE""
 
-dnf module disable redis -y &>>""$LOG_FILE""
+dnf module disable redis -y &>>"$LOG_FILE"
 VALIDATE $? "disabling redis"
 
-dnf module enable redis:7 -y &>>""$LOG_FILE""   
+dnf module enable redis:7 -y &>>"$LOG_FILE"   
 VALIDATE $? "enabling redis 7"
 
-dnf install redis -y &>>""$LOG_FILE""
+dnf install redis -y &>>"$LOG_FILE"
 VALIDATE $? "installing redis"
 
 sed -i -e 's/127.0.0.1/0.0.0.0/g' -e 's/protected-mode yes/protected-mode no/g' /etc/redis/redis.conf
 VALIDATE $? "configuring redis"
 
-systemctl enable redis &>>""$LOG_FILE""
+systemctl enable redis &>>"$LOG_FILE"
 VALIDATE $? "enabling redis"
 
-systemctl restart redis &>>""$LOG_FILE""
+systemctl restart redis &>>"$LOG_FILE"
 VALIDATE $? "starting redis"
 
 
-netstat -lntp | grep 6379 &>>""$LOG_FILE""
+netstat -lntp | grep 6379 &>>"$LOG_FILE"
 VALIDATE $? "checking if redis is listening on port 6379"
 
 

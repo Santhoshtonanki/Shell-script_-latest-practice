@@ -32,14 +32,14 @@ VALIDATE() {
 }
 
 
-    dnf module disable nginx -y &>>""$LOG_FILE""
+    dnf module disable nginx -y &>>"$LOG_FILE"
     VALIDATE $? "disabling nginx"
 
-    dnf module enable nginx:1.24 -y &>>""$LOG_FILE""
+    dnf module enable nginx:1.24 -y &>>"$LOG_FILE"
     VALIDATE $? "enabling nginx 20"
 
 
-    dnf install nginx -y &>>""$LOG_FILE""
+    dnf install nginx -y &>>"$LOG_FILE"
     VALIDATE $? "installing nginx"
 
     systemctl enable nginx 
@@ -51,23 +51,23 @@ VALIDATE() {
     rm -rf /usr/share/nginx/html/* 
     VALIDATE $? "removing existing content from /usr/share/nginx/html"
     
-    curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+    curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>"$LOG_FILE"
     VALIDATE $? "downloading frontend zip file"
 
     cd /usr/share/nginx/html 
     VALIDATE $? "changing directory to /usr/share/nginx/html"
 
-    unzip /tmp/frontend.zip
+    unzip /tmp/frontend.zip &>>"$LOG_FILE"
     VALIDATE $? "unzipping frontend zip file"
 
 
-    systemctl daemon-reload &>>""$LOG_FILE""
+    systemctl daemon-reload &>>"$LOG_FILE"
     VALIDATE $? "reloading systemctl daemon"
 
-    systemctl restart nginx &>>""$LOG_FILE""
+    systemctl restart nginx &>>"$LOG_FILE"
     VALIDATE $? "restarting nginx"
 
     END_TIME="($date +%s)"
 
-    TOTAL_TIME="(("$END_TIME") - ("$START_TIME"))
+    TOTAL_TIME="(("$END_TIME") - ("$START_TIME")) | tea -a "$LOG_FILE"
     echo "total executed time for installing "$TOTAL_TIME"

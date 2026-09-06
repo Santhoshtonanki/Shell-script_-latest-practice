@@ -32,13 +32,13 @@ VALIDATE() {
     fi
 }
 
-    dnf module disable nodejs -y &>>""$LOG_FILE""
+    dnf module disable nodejs -y &>>"$LOG_FILE"
     VALIDATE $? "disabling nodejs"
 
-    dnf module enable nodejs:20 -y &>>""$LOG_FILE""
+    dnf module enable nodejs:20 -y &>>"$LOG_FILE"
     VALIDATE $? "enabling nodejs 20"
 
-    dnf install nodejs -y &>>""$LOG_FILE""
+    dnf install nodejs -y &>>"$LOG_FILE"
     VALIDATE $? "installing nodejs"
 
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
@@ -62,7 +62,7 @@ VALIDATE() {
     VALIDATE $? "creating /etc/systemd/system/ directory"
 
      cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/mongo.repo \
-        /etc/yum.repos.d/mongo.repo &>>""$LOG_FILE""
+        /etc/yum.repos.d/mongo.repo &>>"$LOG_FILE"
     VALIDATE $? "mongo.repo file copied $G Successfully $N"
 
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service
@@ -71,7 +71,7 @@ VALIDATE() {
     rm -rf /tmp/catalogue.zip   
     VALIDATE $? "deleting catalogue.zip file"
 
-    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>""$LOG_FILE""
+    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>"$LOG_FILE"
     VALIDATE $? "downloaded Catalogue.zip"
 
 
@@ -83,22 +83,22 @@ VALIDATE() {
     rm -rf  /app/*
     VALIDATE $? "removing the all files from APP folder"
 
-    unzip /tmp/catalogue.zip &>>""$LOG_FILE""
+    unzip /tmp/catalogue.zip &>>"$LOG_FILE"
     VALIDATE $? "unzipping the catalogue.zip file"
 
 
-    npm install &>>""$LOG_FILE""
+    npm install &>>"$LOG_FILE"
     VALIDATE $? "installing npm dependencies"
 
 
     systemctl daemon-reload
     VALIDATE $? "reloading the systemctl daemon"
     
-    systemctl enable catalogue &>>""$LOG_FILE""
+    systemctl enable catalogue &>>"$LOG_FILE"
     VALIDATE $? "enabling catalogue"
 
 
-    systemctl restart catalogue &>>""$LOG_FILE""
+    systemctl restart catalogue &>>"$LOG_FILE"
     VALIDATE $? "restarting catalogue"
 
 
@@ -107,19 +107,19 @@ VALIDATE() {
 
     
 
-    dnf clean all &>>""$LOG_FILE""
+    dnf clean all &>>"$LOG_FILE"
     VALIDATE $? "cleaning the dnf cache"
 
-    dnf makecache &>>""$LOG_FILE""
+    dnf makecache &>>"$LOG_FILE"
     VALIDATE $? "making the dnf cache"
 
-    dnf repolist | grep -i mongo &>>""$LOG_FILE""
+    dnf repolist | grep -i mongo &>>"$LOG_FILE"
     VALIDATE $? "checking the mongodb repo is available or not"
     
-    dnf search mongosh &>>""$LOG_FILE""
+    dnf search mongosh &>>"$LOG_FILE"
     VALIDATE $? "checking the mongosh package is available or not"
 
-    dnf install mongodb-mongosh -y &>>""$LOG_FILE""
+    dnf install mongodb-mongosh -y &>>"$LOG_FILE"
     VALIDATE $? "installing mongodb-mongosh"
 
     mongosh --host "mongodb.lylbwof.shop" </app/db/master-data.js

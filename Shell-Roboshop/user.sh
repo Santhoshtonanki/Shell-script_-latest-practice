@@ -32,13 +32,13 @@ VALIDATE() {
     fi
 }
 
-    dnf module disable nodejs -y &>>""$LOG_FILE""
+    dnf module disable nodejs -y &>>"$LOG_FILE"
     VALIDATE $? "disabling nodejs"
 
-    dnf module enable nodejs:20 -y &>>""$LOG_FILE""
+    dnf module enable nodejs:20 -y &>>"$LOG_FILE"
     VALIDATE $? "enabling nodejs 20"
 
-    dnf install nodejs -y &>>""$LOG_FILE""
+    dnf install nodejs -y &>>"$LOG_FILE"
     VALIDATE $? "installing nodejs"
 
 
@@ -61,7 +61,7 @@ VALIDATE() {
     cd /app
     VALIDATE $? "changing directory to /app"
 
-    unzip /tmp/user.zip &>>""$LOG_FILE""
+    unzip /tmp/user.zip &>>"$LOG_FILE"
     VALIDATE $? "unzipping user zip file"
 
 
@@ -73,11 +73,11 @@ VALIDATE() {
 
     
 
-    systemctl daemon-reload &>>""$LOG_FILE""
+    systemctl daemon-reload &>>"$LOG_FILE"
     VALIDATE $? "reloading systemctl daemon"
 
-    systemctl enable user &>>""$LOG_FILE""
+    systemctl enable user &>>"$LOG_FILE"
     VALIDATE $? "enabling user"
 
-    systemctl restart user &>>""$LOG_FILE""
+    systemctl restart user &>>"$LOG_FILE"
     VALIDATE $? "restarting user"
