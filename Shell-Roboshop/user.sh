@@ -61,12 +61,17 @@ VALIDATE() {
     cd /app
     VALIDATE $? "changing directory to /app"
 
-    unzip /tmp/user.zip
+    unzip /tmp/user.zip &>>""$LOG_FILE""
     VALIDATE $? "unzipping user zip file"
 
-    npm install 
+
+    cp /home/centos/Shell-script/Shell-script_-latest-practice/Shell-Roboshop/systemd/user.service /etc/systemd/system/user.service
+    VALIDATE $? "copying user.service file"
+
+    npm install $>>""$LOG_FILE""
     VALIDATE $? "installing nodejs dependencies"
 
+    
 
     systemctl daemon-reload &>>""$LOG_FILE""
     VALIDATE $? "reloading systemctl daemon"
