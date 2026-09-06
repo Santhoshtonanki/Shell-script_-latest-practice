@@ -76,7 +76,7 @@ VALIDATE() {
     cp /home/ec2-user/Shell-script_-latest-practice/Shell-Roboshop/user.service  /etc/systemd/system/user.service
     VALIDATE $? "copying user.service file"
 
-    npm install $>>"$LOG_FILE"
+    npm install &>>"$LOG_FILE"
     VALIDATE $? "installing nodejs dependencies"
 
     
