@@ -13,19 +13,19 @@ SCRIPT_FILE=$( echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_FILE.log"
 
 mkdir -p "$LOGS_FOLDER"
-echo -e "Script Started executed at : $Y$(date)$N" | tee -a ""$LOG_FILE""
+echo -e "Script Started executed at : $Y$(date)$N" | tee -a $LOG_FILE
 
 if [ "$USER_ID" -ne 0 ]; then
-    echo -e "$R" "please run script with root privileges" "$N" | tee -a ""$LOG_FILE""
+    echo -e "$R" "please run script with root privileges $N" | tee -a "$LOG_FILE"
     exit 1
 fi
 
 VALIDATE() {
     if [ "$1" -ne 0 ]; then
-        echo -e "$Y" "installation process got "$N" "$R" failure for $2" "$N" | tee -a ""$LOG_FILE""
+        echo -e "$Y" "installation process got "$N" "$R" failure for $2" "$N" | tee -a "$LOG_FILE"
         exit 1
     else
-        echo -e "$Y" "Installation process got "$N" "$G" success for $2" "$N" | tee -a ""$LOG_FILE""
+        echo -e "$Y" "Installation process got "$N" "$G" success for $2" "$N" | tee -a "$LOG_FILE"
     fi
 }
 
