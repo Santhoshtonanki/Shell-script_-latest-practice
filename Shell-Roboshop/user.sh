@@ -55,6 +55,10 @@ VALIDATE() {
     chown -R roboshop:roboshop /app
     VALIDATE $? "changing ownership of /app"
 
+
+    rm -rf /tmp/*
+    VALIDATE $? "removing tmp file"
+
     curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip
     VALIDATE $? "downloading user zip file"
 
